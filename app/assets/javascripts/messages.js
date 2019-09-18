@@ -1,6 +1,5 @@
 $(document).on('turbolinks:load', function(){
   $(function(){
-        console.log("text")
     function buildHTML(message) {
         var content = message.content ? `${ message.content }` : "";
         var img = message.image ? `<img src= ${ message.image }>` : "";
@@ -24,7 +23,6 @@ $(document).on('turbolinks:load', function(){
     }
     $('#new_message').on('submit', function(e){
         e.preventDefault();
-        console.log("hello")
         var message = new FormData(this);
         var url = (window.location.href);
         $.ajax({
@@ -36,10 +34,9 @@ $(document).on('turbolinks:load', function(){
         contentType: false
         })
         .done(function(data){
-            console.log(data)
         var html = buildHTML(data);
         $('.messages').append(html);
-        $('#message_content').val('');
+        $('#message_content').get(0).reset();
         })
         .fail(function(data){
         alert('エラーが発生したためメッセージは送信できませんでした。');
