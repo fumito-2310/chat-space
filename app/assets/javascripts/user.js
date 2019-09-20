@@ -30,7 +30,7 @@ $(function(){
                 <p class="chat-group-user__name">${users}</p>
                 </div>`
     return html;
-    }
+  }
 
     $('#user-search-field').on('keyup', function(e){
         var input = $("#user-search-field").val();
@@ -51,7 +51,7 @@ $(function(){
             }
 
             else {
-                appendErrMsgToHTML("一致するユーザーが見つかりません");
+                appendNotUser("一致するユーザーが見つかりません");
             }
         })
         .fail(function() {
@@ -67,6 +67,6 @@ $(function(){
 
          $(document).on("click", ".user-search-remove", function () {
            $(this).parent().remove();
-      });
-    });
+        });
   });
+});
