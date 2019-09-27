@@ -1,26 +1,26 @@
 $(document).on('turbolinks:load', function(){
-  $(function(){
-    function buildHTML(message) {
-        var content = message.content ? `${ message.content }` : "";
-        var img = message.image ? `<img src= ${ message.image }>` : "";
-        var html = `<div class="message data-id="${message.id}">
-                      <div class="upper-message">
-                        <p class="upper-message__user-name">
-                          ${message.user_name}
-                        </p>
-                        <p class="upper-message__date">
-                          ${message.date}
-                        </p>
-                      </div>
-                      <p class="lower-message__content">
-                        ${content}
-                        <p>
-                        ${img}
-                        </p>
-                      </p>
-                    </div>`
+  function buildHTML(message){
+      var content = message.content ? `${message.content}` : "";
+      var img = message.image ? `<img src= ${ message.image }>` : "";
+      var html = `<div class="message" data-id= ${message.id}>
+          <div class="upper-message">
+          <div class="upper-message__user-name">
+            ${message.user_name} 
+          </div>
+          <div class="upper-message__date">
+            ${message.created_at} 
+          </div>
+        </div> 
+        <div class="lower-message">
+          <p class="lower-message__content">
+          ${content}
+          </p> 
+          ${img}   
+        </div> 
+      </div>`
     return html;
-    }
+    };
+
     $('#new_message').on('submit', function(e){
         e.preventDefault();
         var message = new FormData(this);
@@ -42,9 +42,31 @@ $(document).on('turbolinks:load', function(){
         })
         .fail(function(data){
         alert('エラーが発生したためメッセージは送信できませんでした。');
-        });
-        
-        
+        });  
+      })
+
+
+        var reloadMessages = function() {
+        if (window.location.href.match(/\/groups\/\d+\/messages/)){ 
+    last_message_id = $(".message:last").data("id");
+    $.ajax({
+      url: "api/messages",
+      type: 'get',
+      dataType: 'json',
+      data: {id: last_message_id}
+    })
+    .done(function(messages) {
+      var insertHTML = "";
+      messages.forEach(function(message){
+        insertHTML = buildHTML(message);
+        $(".messages").append(insertHTML);
+        $(".messages").animate({scrollTop:$(".messages")[0].scrollHeight},"fast");
       })
     })
+    .fail(function() {
+      alert('error');
+      });
+    }
+   };
+   setInterval(reloadMessages, 5000);
 });
