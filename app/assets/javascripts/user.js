@@ -51,7 +51,7 @@ $(document).on('turbolinks:load',function(){
             dataType: 'json'            
         })
 
-        .done(function(users){             
+        .done(function(users){          
             $('#user-search-result').empty();
             if (users.length !== 0) {            
                 users.forEach(function(user){ 
@@ -69,16 +69,19 @@ $(document).on('turbolinks:load',function(){
         })
   });
 
-    
-    $(document).on("click",".user-search-add",function () {
+   
+    $('#user-search-result').on("click",".user-search-add",function () {
         var name = $(this).data('user-name');
         var id = $(this).data('user-id');
+       
         var html =addUser(name,id)
         $("#chat-group-users").append(html);
+        
         $(this).parent().remove();
+        
     });
 
-    $(document).on("click",".user-search-remove",function(){
+    $("#chat-group-users").on("click",".user-search-remove",function(){
         
         $(this).parent().remove();
     });
