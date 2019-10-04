@@ -38,9 +38,7 @@ $(document).on('turbolinks:load',function(){
         
         var x = $(".js-user");
         var arr = [];
-        x.each(function(i,ele){
-            arr.push(ele.value);
-        });
+        
 
         
         $.ajax({
@@ -80,6 +78,9 @@ $(document).on('turbolinks:load',function(){
     $(document).on("click",".user-search-remove",function(){
         
         $(this).parent().remove();
+    });
+    x.each(function(i,ele){
+            arr.push(ele.value);
     });
 
 });
