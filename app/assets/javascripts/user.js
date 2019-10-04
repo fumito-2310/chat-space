@@ -40,7 +40,7 @@ $(document).on('turbolinks:load',function(){
         var arr = [];
         x.each(function(i,ele){
             arr.push(ele.value);
-        })
+        });
 
         
         $.ajax({
